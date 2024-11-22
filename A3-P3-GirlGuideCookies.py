@@ -7,62 +7,66 @@
 #Student #:     W0239497
 #Student Name:  Chauntel Smith
 # YOUR CODE STARTS HERE, each line must be indented (one tab)
-#Lists
-# nameList = []
-# soldBoxes = []
-# gGuideStats = int(input("Enter number of Guides that participated in event: "))
-
-#Calculate and output a list of all guide names.
-
-def giudeInfo(nameList, soldBoxes, gGuideStats):
+#Input Guide name and boxes sold and store them in 2 lists
+def giudeInfo(gGuideStats):
+    nameList = []
+    soldBoxes = []
     for i in range(gGuideStats):
-        GgName = input(f"Enter the name of guide #{i + 1}: ")
-        nameList.append(GgName)
-        box = input(int(f"Enter the amount of boxes sold by {GgName}: "))
-        soldBoxes.append(box)
+        gGName = input(f"\nEnter the name of guide #{i + 1}: ")
+        nameList.append(gGName)
+        boxNum = int(input(f"Enter the amount of boxes sold by {gGName}: "))
+        soldBoxes.append(boxNum)
     return nameList,soldBoxes
 
-#Total calculations
-def totalBox(soldBoxes,nameList):
-    totalSoldBox = sum(soldBoxes)
-    average = totalSoldBox / len(soldBoxes)
-    maxWinner = max(soldBoxes)
-    indexOfMax = soldBoxes.index(len(nameList))
-    return totalSoldBox,indexOfMax,maxWinner,average
-
 #average calculations
+def averageCalculations(soldBoxes):
+    totalSoldBox = sum(soldBoxes)
+    average = totalSoldBox/len(soldBoxes)
+    return average
+
+#max calculations
+def maxCalculations(soldBoxes):
+    maxBox = max(soldBoxes)
+    indexOfMax = soldBoxes.index(maxBox)
+    return maxBox,indexOfMax
 
 # #Prizes calculations
-def prizeCalculations(soldBoxes,nameList,average,indexOfMax):
+def prizeCalculations(nameList,soldBoxes,average,indexOfMax):
     winnerList = []
     for i in range(len(nameList)):
         if i == indexOfMax:
-            winnerList.append(f"{nameList [i]}          -A trip to the Girl Guide Jamboree")
+            winnerList.append(f"{nameList [i]}              -A trip to the Girl Guide Jamboree in Aruba!")
         elif soldBoxes[i] > average:
-            winnerList.append(f"{nameList [i]}          -Super Seller Badge")
+            winnerList.append(f"{nameList [i]}              -Super Seller Badge!")
         elif soldBoxes[i] > 0:
-            winnerList.append(f"{nameList [i]}          -Left over cookies!")
+            winnerList.append(f"{nameList [i]}              -Left over cookies!")
         else:
-            winnerList.append(f"{nameList [i]}          -")
+            winnerList.append(f"{nameList [i]}              -")
     return winnerList
 
+    #Main Program
 def main():
-    nameList = []
-    soldBoxes = []
+    print("\nGirl Guide Cookie Sell-off Calculator!\n")
     #Loop to restart if the user imputs the wrong values
-    while True: 
+    while True:
         gGuideStats = int(input("Enter number of Guides that participated in event: "))
-        nameList,soldBoxes, gGuideStats = giudeInfo(nameList, soldBoxes, gGuideStats)
-        print(giudeInfo(nameList, soldBoxes, gGuideStats))
-        indexOfMax,average = totalBox(soldBoxes,nameList)
-        winnerList = prizeCalculations(soldBoxes,nameList,average,indexOfMax)
-        correct = input("were the your inputs entered correctly? (Y/N): ")
+        nameList, soldBoxes = giudeInfo(gGuideStats)
+        correct = input("\nIs the information entered correct? (Y/N): ")
         if correct.upper() == "Y":
-            print(winnerList)   #Come back soon message
-            break
-        else:
+            averavge = averageCalculations(soldBoxes)
+            maxBox,indexOfMax = maxCalculations(soldBoxes)
+            winnerList = prizeCalculations(nameList,soldBoxes,averavge,indexOfMax)
+            #Determine and display the prize each guide won based on their sales.
+            print(f"\nThe average number of boxes sold by each guide was {averavge:0.1f}\n")
+            print("Guide                        Prize Won:")
+            print("-----------------------------------------------------------------------------------------------------------------------------------------------")
+            
+            for winner in winnerList:       #<<--- I used this in program one, AI reminded me I could use a for loop with "day" replacing "i" (for day in slackDays)
+                print(winner)               #and "hour" to replace "j" in "hours" to iterate over the slackDaysList 
+            break                           #after the condition was applied and search the day applied and its correseponding hour to call them
+        else:                               # I decided to try it in this program as well, I believe I am using it correctly
             print("Sorry about that, lets try again!") 
 main()
 
-#Determine and display the prize each guide won based on their sales.
+
     # YOUR CODE ENDS HERE
